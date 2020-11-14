@@ -1,33 +1,59 @@
-const express = require('express');
+/*import express from 'express';
 const router = express.Router();
-const Post = require('../models/Post');
+import { postController } from '../controllers/index.js';
 
-//TRENGER IKKE /POSTS HER DA DET BLIR KALT I APP.JS KRÆSJER MED /POSTS.
-//DA BLIR DET /posts/posts
-
-router.get('/',(req, res) =>{
-    res.send('We are on posts');
+router.get('/:id', postController.get);
+router.post('/', postController.create);
+router.put('/:id', postController.update);
+router.delete('/:id', postController.remove);
+*/
+/*
+router.get('/:postId', async (req, res) =>{
+    const post = await Post.findById(req.params.postId)
+    try{res.json(post);}
+    catch (err) 
+    {
+        res.json({ message: err});
+    }
 });
 
-router.get('/specific',(req, res) =>{
-    res.send('We are on specific posts');
-});
 
-//Bruk som Model du allerede kan fra OOP/Android
-
-router.post('/', (req,res) => {
+router.post('/', async (req,res, next) => {
     const post = new Post({
         title: req.body.title,
         description: req.body.description
     });
 
-    post.save()
-    .then(data =>{
-        res.json(data);
-    })
-    .catch(err => {
+    try {
+        const savedPost = await post.save();
+        res.json(savedPost);
+    } catch (err) {
         res.json({ message: err });
-    });
+    } 
 });
 
-module.exports = router;
+
+//DELETE:
+
+router.delete('/:postId', async (req,res) => {
+    try{
+        const removedPost = await Post.deleteOne({_id: req.params.postId } );
+        res.json(removedPost);
+    } catch ( err) {
+        res.json( {message: err})
+    }
+});
+
+router.patch('/:postId', async (req,res) => {
+    try{
+        const updatedPost = await Post.updateOne(
+        {_id: req.params.postId }, 
+        {$set: {title: req.body.title}} );
+        res.json(updatedPost);
+    } catch ( err) {
+        res.json( {message: err})
+    }
+});
+*/
+/*
+export default router;*/

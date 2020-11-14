@@ -1,20 +1,26 @@
-const express = require('express');
+import express, { json, urlencoded } from 'express';
+
+import mongoose from 'mongoose';
+import 'dotenv/config.js';
+import connectDatabase from './config/db.js';
+//import postsRoute from './routes/posts.js';
+import cors from 'cors';
+import user from './routes/user.js';
+import poll from './routes/poll.js';
+
+
 const app = express();
-const mongoose = require('mongoose');
-require('dotenv/config')
 
+app.use(json());
+app.use(urlencoded({extended: false}));
 
-//IMPort routes:
-
-const postsRoute = require('./routes/posts');
 
 //Bodyparser her: innebyd i express
-app.use(express.json())
-
 
 //MIDDLEWARE:
+/*
 app.use('/posts', postsRoute);
-
+*/
 //Middelware: ============================
 //EVERY time it goes to the route '/posts' it will execute this function
 
@@ -22,24 +28,28 @@ app.use('/posts', postsRoute);
     console.log('this is middelware running');
 });*/
 
-//ROUTES: ==================
+app.use(cors({
+    origin: 'http://localhost:3000',
+    allowedHeaders: ['Content-Type']
+  }));
 
-app.get('/',(req,res) =>{
-    res.send('We are on home');
-});
-
-
+app.use('/user', user);
+  
 
 //DB CONNECTION:
 
-mongoose.connect(
+connectDatabase();
+
+/*connect(
     process.env.DB_CONNECTION,
     { useUnifiedTopology: true,
         useNewUrlParser: true},
     () => {
         console.log('connected to DB!');
-});
-
+        console.log(connection.host);
+        console.log(connection.port);
+        
+});*/
 
 //Listen:
 
