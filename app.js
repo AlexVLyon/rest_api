@@ -1,7 +1,5 @@
 const express = require('express');
-
 const app = express();
-
 const mongoose = require('mongoose');
 require('dotenv/config')
 
@@ -9,6 +7,9 @@ require('dotenv/config')
 //IMPort routes:
 
 const postsRoute = require('./routes/posts');
+
+//Bodyparser her: innebyd i express
+app.use(express.json())
 
 
 //MIDDLEWARE:
