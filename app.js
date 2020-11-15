@@ -34,6 +34,7 @@ app.use(cors({
   }));
 
 app.use('/user', user);
+app.use('/poll', poll)
   
 
 //DB CONNECTION:
